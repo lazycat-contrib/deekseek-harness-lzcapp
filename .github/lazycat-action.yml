@@ -24,7 +24,7 @@ images:
     source: docker.io/1panel/deepseek-harness
     channel: beta
     sort: semver
-    tag_regex: '^0\.1\.\d+-rc\.\d+$'
+    tag_regex: '^\d+\.\d+\.\d+-rc\.\d+$'
     delivery:
       mode: mirror
       require_digest_match: true

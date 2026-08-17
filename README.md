@@ -14,7 +14,7 @@ The deployment wizard exposes the administrator username and generates a random 
 
 ## Automation
 
-The scheduled workflow discovers future `0.1.x-rc.N` image tags, builds a versioned GitHub Release asset, and publishes only to the MiaoMiao private store. The official LazyCat store is disabled.
+The scheduled workflow discovers future numeric `X.Y.Z-rc.N` image tags, builds a versioned GitHub Release asset, and publishes only to the MiaoMiao private store. The official LazyCat store is disabled.
 
 Package ID: `community.lazycat.app.deepseek-harness`.
 
