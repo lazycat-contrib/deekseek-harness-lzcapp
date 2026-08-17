@@ -5,6 +5,7 @@ application:
   upstreams:
     - location: /
       backend: https://deepseek-harness:8443/
+      disable_backend_ssl_verify: true
   injects:
     - id: login-autofill
       on: browser
