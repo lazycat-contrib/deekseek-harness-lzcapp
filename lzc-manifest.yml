@@ -1,0 +1,33 @@
+application:
+  subdomain: deepseek-harness
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: https://deepseek-harness:8443/
+  injects:
+    - id: login-autofill
+      on: browser
+      when:
+        - /*
+      do:
+        - src: builtin://simple-inject-password
+          params:
+            user: "{{ .U.login_user }}"
+            password: "{{ .U.login_password }}"
+
+services:
+  deepseek-harness:
+    # upstream: docker.io/1panel/deepseek-harness:0.1.0-rc.6
+    image: docker.1ms.run/1panel/deepseek-harness:0.1.0-rc.6
+    environment:
+      - DSH_HOME=/data/dsh
+      - DSH_TELEMETRY_DISABLED=1
+      - HTTPS_ACCESS_HOST={{ .S.AppDomain }}
+      - DSH_AUTH_USERNAME={{ .U.login_user }}
+      - DSH_AUTH_PASSWORD={{ .U.login_password }}
+    binds:
+      - /lzcapp/var/data:/data/dsh
+      - /lzcapp/var/workspace:/workspace
+
+usage: "打开应用后会自动填充部署时配置的管理员账号和密码。应用数据与工作区均保存在应用内部持久目录。"

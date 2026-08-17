@@ -1,0 +1,23 @@
+params:
+  - id: login_user
+    type: string
+    name: Login username
+    description: Administrator username used by DeepSeek Harness.
+    optional: false
+    default_value: admin
+
+  - id: login_password
+    type: secret
+    name: Login password
+    description: Administrator password used by DeepSeek Harness.
+    optional: false
+    default_value: $random(len=20)
+
+locales:
+  zh:
+    login_user:
+      name: 登录用户名
+      description: DeepSeek Harness 管理员用户名。
+    login_password:
+      name: 登录密码
+      description: DeepSeek Harness 管理员密码。

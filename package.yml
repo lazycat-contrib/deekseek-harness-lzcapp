@@ -1,0 +1,15 @@
+package: community.lazycat.app.deepseek-harness
+version: 0.1.0-rc.6
+name: DeepSeek Harness
+description: "DeepSeek Harness 是面向开发者的 AI 编程代理工作台。"
+author: DeepSeek Team
+homepage: https://www.deepseek.com/harness/
+min_os_version: 1.5.0
+
+locales:
+  zh:
+    name: DeepSeek Harness
+    description: "面向开发者的 AI 编程代理工作台。"
+  en:
+    name: DeepSeek Harness
+    description: "An AI coding agent workspace for developers."
