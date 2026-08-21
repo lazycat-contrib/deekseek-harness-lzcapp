@@ -14,11 +14,10 @@ application:
         - /*
       do: |
         ctx.headers.set("Authorization", "Basic " + "{{ printf "%s:%s" .U.proxy_username .U.proxy_password | b64enc }}");
-
 services:
   deepseek-harness:
     # upstream: docker.io/smanx/deepseek-harness:0.1.0-rc.8
-    image: smanx/deepseek-harness:0.1.0-rc.8
+    image: docker.1ms.run/smanx/deepseek-harness:0.1.0-rc.8
     environment:
       # DSH 监听端口（容器内 127.0.0.1）
       - DSH_PORT=3079
