@@ -21,10 +21,10 @@ images:
   - id: deepseek-harness
     target: service
     service: deepseek-harness
-    source: docker.io/1panel/deepseek-harness
+    source: docker.io/smanx/deepseek-harness
     channel: beta
     sort: semver
-    tag_regex: '^\d+\.\d+\.\d+-rc\.\d+$'
+    tag_regex: '^\d+\.\d+\.\d+(-rc\.\d+)?$'
     delivery:
       mode: mirror
       require_digest_match: true

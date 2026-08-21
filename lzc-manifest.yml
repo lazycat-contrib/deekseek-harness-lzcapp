@@ -3,32 +3,35 @@ application:
   public_path:
     - /
   upstreams:
+    # 代理入口 - PROXY_PORT (LAN 入口点)
     - location: /
-      backend: https://deepseek-harness:8443/
-      disable_backend_ssl_verify: true
+      backend: http://deepseek-harness:3080/
+{{ if and .U.proxy_username .U.proxy_password }}
   injects:
-    - id: login-autofill
-      on: browser
+    - id: inject-basic-auth
+      on: request
+      auth_required: false
       when:
         - /*
-      do:
-        - src: builtin://simple-inject-password
-          params:
-            user: "{{ .U.login_user }}"
-            password: "{{ .U.login_password }}"
+      do: |
+        ctx.headers.set("Authorization", "Basic " + "{{ printf "%s:%s" .U.proxy_username .U.proxy_password | b64enc }}");
+{{ end }}
 
 services:
   deepseek-harness:
-    # upstream: docker.io/1panel/deepseek-harness:0.1.0-rc.6
-    image: docker.1ms.run/1panel/deepseek-harness:0.1.0-rc.6
+    # upstream: docker.io/smanx/deepseek-harness:0.1.0-rc.8
+    image: smanx/deepseek-harness:0.1.0-rc.8
     environment:
-      - DSH_HOME=/data/dsh
-      - DSH_TELEMETRY_DISABLED=1
-      - HTTPS_ACCESS_HOST={{ .S.AppDomain }}
-      - DSH_AUTH_USERNAME={{ .U.login_user }}
-      - DSH_AUTH_PASSWORD={{ .U.login_password }}
+      # DSH 监听端口（容器内 127.0.0.1）
+      - DSH_PORT=3079
+      # 代理监听端口（入口点）
+      - PROXY_PORT=3080
+{{ if .U.proxy_username }}
+      - {{ printf "PROXY_USERNAME=%s" .U.proxy_username | quote }}
+{{ end }}
+{{ if .U.proxy_password }}
+      - {{ printf "PROXY_PASSWORD=%s" .U.proxy_password | quote }}
+{{ end }}
     binds:
-      - /lzcapp/var/data:/data/dsh
-      - /lzcapp/var/workspace:/workspace
-
-usage: "打开应用后会自动填充部署时配置的管理员账号和密码。应用数据与工作区均保存在应用内部持久目录。"
+      # 持久化 dsh 数据
+      - /lzcapp/var/dsh:/root/.dsh
