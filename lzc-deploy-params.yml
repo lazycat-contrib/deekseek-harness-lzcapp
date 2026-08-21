@@ -2,16 +2,16 @@ params:
   - id: proxy_username
     type: string
     name: "Proxy Username"
-    description: "Basic Auth username for the proxy. Leave empty to disable authentication."
-    default_value: ""
-    optional: true
+    description: "Basic Auth username for the proxy."
+    default_value: "admin"
+    optional: false
 
   - id: proxy_password
     type: secret
     name: "Proxy Password"
-    description: "Basic Auth password for the proxy. Leave empty to disable authentication."
-    default_value: ""
-    optional: true
+    description: "Basic Auth password for the proxy."
+    default_value: "$random(len=6)"
+    optional: false
 
 locales:
   zh:

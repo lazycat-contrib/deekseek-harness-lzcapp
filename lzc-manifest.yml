@@ -6,7 +6,6 @@ application:
     # 代理入口 - PROXY_PORT (LAN 入口点)
     - location: /
       backend: http://deepseek-harness:3080/
-{{ if and .U.proxy_username .U.proxy_password }}
   injects:
     - id: inject-basic-auth
       on: request
@@ -15,7 +14,6 @@ application:
         - /*
       do: |
         ctx.headers.set("Authorization", "Basic " + "{{ printf "%s:%s" .U.proxy_username .U.proxy_password | b64enc }}");
-{{ end }}
 
 services:
   deepseek-harness:
@@ -26,12 +24,9 @@ services:
       - DSH_PORT=3079
       # 代理监听端口（入口点）
       - PROXY_PORT=3080
-{{ if .U.proxy_username }}
-      - {{ printf "PROXY_USERNAME=%s" .U.proxy_username | quote }}
-{{ end }}
-{{ if .U.proxy_password }}
-      - {{ printf "PROXY_PASSWORD=%s" .U.proxy_password | quote }}
-{{ end }}
+      # Basic Auth 凭证（始终注入，默认值来自设置向导）
+      - PROXY_USERNAME={{ .U.proxy_username }}
+      - PROXY_PASSWORD={{ .U.proxy_password }}
     binds:
       # 持久化 dsh 数据
       - /lzcapp/var/dsh:/root/.dsh
