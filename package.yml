@@ -1,15 +1,13 @@
 package: community.lazycat.app.deepseek-harness
-version: 0.1.0-rc.8
+version: 0.1.1-rc.2
 name: DeepSeek Harness
 description: "DeepSeek Harness - 受 Basic Auth 保护的 API 代理，将 DeepSeek 模型能力暴露为 HTTP 服务。"
 author: DeepSeek Team
 homepage: https://github.com/smanx/deepseek-harness
 min_os_version: 1.5.0
-
 permissions:
   required:
     - net.internet
-
 locales:
   zh:
     name: DeepSeek Harness
