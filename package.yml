@@ -1,5 +1,5 @@
 package: community.lazycat.app.deepseek-harness
-version: 0.1.2-rc.1
+version: 0.1.5-rc.2
 name: DeepSeek Harness
 description: "DeepSeek Harness - 受 Basic Auth 保护的 API 代理，将 DeepSeek 模型能力暴露为 HTTP 服务。"
 author: DeepSeek Team
